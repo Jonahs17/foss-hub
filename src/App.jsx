@@ -63,7 +63,7 @@ function App() {
       <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <img src="/pwa-192.png" alt="logo" style={{ width: 48, height: 48, borderRadius: 8 }} />
         <div>
-          <h1 style={{ margin: 0 }}>FOSS Hub</h1>
+          <h1 style={{ margin: 0, color: "#006700ff" }}>FOSS Hub</h1>
           <small style={{ color: "#666" }}>Offline-first index of open-source projects</small>
         </div>
       </header>
@@ -77,7 +77,7 @@ function App() {
           <div
             key={r.name || r.html_url}
             style={{
-              border: "1px solid #eee",
+              border: "3px solid #006700ff",
               padding: 12,
               borderRadius: 8,
               marginBottom: 12,
@@ -88,7 +88,7 @@ function App() {
           >
             {r.avatar_url && <img src={r.avatar_url} alt="" style={{ width: 56, height: 56, borderRadius: 8 }} />}
             <div style={{ flex: 1 }}>
-              <h3 style={{ margin: 0 }}>{r.name}</h3>
+              <h3 style={{ margin: 0, color: "#006700ff" }}>{r.name}</h3>
               <p style={{ margin: "6px 0", color: "#333" }}>{r.description}</p>
               <p style={{ margin: 0, color: "#444" }}>
                 ⭐ {r.stars} | License: {r.license}{" "}
