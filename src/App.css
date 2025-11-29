@@ -1,43 +1,319 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+
+
+
+/* =========================================
+   GLOBAL ROOT COLORS (White + Green Theme)
+========================================= */
+:root {
+  --bg-white: #ffffff;
+  --surface-1: #f8fffa;
+  --surface-2: #f0fff4;
+  --text: #123524;
+  --muted: #6b705c;
+  --primary: #0ea57f;
+  --primary-dark: #0b8a63;
+  --border: #daf7e8;
+  --accent: #dff7ea;
+}
+
+/* =========================================
+   RESET + GLOBAL CENTERING
+========================================= */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-white);
+  display: flex;
+  justify-content: center;   /* center the whole app horizontally */
+  align-items: flex-start;    /* content starts at top */
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* =========================================
+   MAIN APP CONTAINER — CENTER EVERYTHING
+========================================= */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* center children horizontally */
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 900px;            /* page width */
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;           /* center all text EXCEPT cards */
+}
+
+/* =========================================
+   HEADER (Centered)
+========================================= */
+
+.header-row {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.header-row img {
+  background: linear-gradient(180deg, #f7fff9, #eefef3);
+  padding: 6px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(14,165,164,0.08);
+}
+
+
+.refresh-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border: none;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.refresh-btn:hover {
+  opacity: 0.92;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-btn svg {
+  color: white;
+}
+
+
+/* =========================================
+   CONTROLS (Centered row)
+========================================= */
+
+.controls {
+  width: 100%;
+  max-width: 820px;
+  margin: 10px auto 14px auto;
+  display: flex;
+  justify-content: center;    /* CENTER the search/filter/lang controls */
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Inputs + Select */
+.input,
+.select {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface-1), var(--surface-2));
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: box-shadow 160ms ease, border-color 160ms ease, transform 80ms ease;
+}
+
+.input:focus,
+.select:focus {
+  box-shadow: 0 6px 18px rgba(14,165,124,0.12);
+  border-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Control Buttons */
+.controls button.input {
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls button.input[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Control icons */
+.controls svg {
+  color: #ffffff;
+}
+
+/* =========================================
+   OFFLINE BANNER (Centered)
+========================================= */
+
+.banner {
+  width: 100%;
+  max-width: 820px;
+  margin: 14px auto;
+  padding: 10px;
   text-align: center;
+
+  background: linear-gradient(180deg, #f1fff6, #e6fff0);
+  color: var(--primary-dark);
+
+  border-radius: 8px;
+  font-weight: 700;
+  border: 1px solid rgba(14,165,124,0.12);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+/* =========================================
+   REPOSITORY CARDS (Centered container)
+========================================= */
 
 .card {
-  padding: 2em;
+  width: 100%;
+  max-width: 820px;       /* ensure card is centered */
+  margin: 12px auto;      /* center card horizontally */
+  padding: 14px;
+  border-radius: 12px;
+
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  background: linear-gradient(180deg, #ffffff, var(--surface-1));
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(12,40,20,0.03);
+
+  text-align: left;       /* important: keep card content left */
 }
 
-.read-the-docs {
-  color: #888;
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--accent);
+  border: 1px solid #eaf7ee;
+}
+
+.card h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.card p {
+  margin: 6px 0;
+  color: var(--muted);
+}
+
+/* GitHub link */
+.card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: var(--primary-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   LOADING SKELETONS
+========================================= */
+
+.skeleton {
+  background: linear-gradient(90deg, #f3fff8 25%, #f8fffdf0 37%, #f3fff8 63%);
+  background-size: 400% 100%;
+  animation: shine 1.2s linear infinite;
+  border-radius: 8px;
+}
+
+.skel-title {
+  width: 60%;
+  height: 16px;
+  margin-bottom: 8px;
+  background: #f1fff7;
+}
+
+.skel-text {
+  width: 90%;
+  height: 12px;
+  margin-bottom: 6px;
+  background: #f1fff7;
+}
+
+@keyframes shine {
+  100% { background-position: -200% 0; }
+}
+
+/* =========================================
+   REFRESH SPIN
+========================================= */
+
+.refresh-rotate {
+  animation: spin 0.8s linear infinite;
+  color: white;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 640px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card a {
+    justify-content: center;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+:focus {
+  outline: 3px solid rgba(14,165,124,0.12);
+  outline-offset: 2px;
+}
+
+
+/* Make search + filter icons dark grey */
+.icon-grey {
+  color: #4a4a4a !important;   /* dark grey */
+  opacity: 0.75;               /* slightly muted */
 }
 
