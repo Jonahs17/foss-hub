@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { fetchRepo } from "./api";
+import { getCached,setCached } from "./cache";
 import "./App.css";
 
 function App() {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [online, setOnline] = useState(navigator.onLine);
 
   const list = [
     ["opendatakerala", "lsg-kerala-data"],
@@ -23,18 +25,66 @@ function App() {
   const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || "";
 
   useEffect(() => {
+
+    function handleOnline() {
+      setOnline(true);
+    }
+    function handleOffline() {
+      setOnline(false);
+    }
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
+
+  useEffect(() => {
     let mounted = true;
 
     async function load() {
+      setLoading(true);
+
       const final = [];
       for (let [owner, repo] of list) {
+        const cachekey = `${owner}/${repo}`;
         try {
-          const data = await fetchRepo(owner, repo, GITHUB_TOKEN);
-          final.push(data);
-        } catch (e) {
-          console.log("fetch error for", owner, repo, e);
-          // push a fallback object so UI remains consistent
+          if (navigator.onLine) {
+            const data = await fetchRepo(owner, repo, GITHUB_TOKEN);
+            final.push(data);
+
+            await setCached(cachekey, data);
+            continue;
+        }
+          const cached = await getCached(cachekey);
+          if (cached) {
+            final.push(cached);
+            continue;
+          }
+
           final.push({
+            name: `${owner}/${repo}`,
+            description:"No network and no cached data available.",
+            stars: "N/A",
+            license: "N/A",
+            updated_at: null,
+            html_url: `https://github.com/${owner}/${repo}`,
+            avatar_url: ""
+          });
+      }
+         catch (e) {
+          console.warn("Network fetch failed, trying cache:", cachekey,e);
+          const cached = await getCached(cachekey);
+          if (cached) {
+            final.push(cached);
+            continue;
+          }
+          else{
+            final.push({
             name: `${owner}/${repo}`,
             description: "Could not fetch data (offline or rate limit).",
             stars: "N/A",
@@ -43,6 +93,9 @@ function App() {
             html_url: `https://github.com/${owner}/${repo}`,
             avatar_url: ""
           });
+          }
+
+          
         }
       }
 
@@ -60,16 +113,56 @@ function App() {
 
   return (
     <div style={{ padding: 20, fontFamily: "Inter, Arial, sans-serif", maxWidth: 900, margin: "0 auto" }}>
-      <header style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <img src="/pwa-192.png" alt="logo" style={{ width: 48, height: 48, borderRadius: 8 }} />
-        <div>
-          <h1 style={{ margin: 0, color: "#006700ff" }}>FOSS Hub</h1>
-          <small style={{ color: "#666" }}>Offline-first index of open-source projects</small>
-        </div>
-      </header>
+      <header style={{ display: "flex", alignItems: "center", gap: 12, flexDirection: "column" }}>
+  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <img 
+      src="/pwa-192.png" 
+      alt="logo" 
+      style={{ width: 48, height: 48, borderRadius: 8 }} 
+    />
+    <div>
+      <h1 style={{ margin: 0, textAlign: "center", color: 'green' }}>FOSS Hub</h1>
+      <small style={{ color: "#666" }}>Offline-first index of open-source projects</small>
+    </div>
+  </div>
+
+  {/* Refresh button on next line */}
+  <button
+    onClick={() => window.location.reload()}
+    style={{
+      padding: "8px 12px",
+      borderRadius: "6px",
+      border: "1px solid #ccc",
+      background: "#534cc6ff",
+      cursor: "pointer",
+      fontWeight: 600,
+      marginTop: "10px"
+    }}
+  >
+    Refresh
+  </button>
+</header>
+
 
       <main style={{ marginTop: 20 }}>
-        {loading && <p>Loading repositories...</p>}
+        {/* Live offline/online banner */}
+        {!online && (
+          <div style={{
+            background: "#fff4e5",
+            color: "#663c00",
+            padding: "10px",
+            borderRadius: 6,
+            marginBottom: 12,
+            textAlign: "center",
+            fontWeight: 600
+          }}>
+            ⚠️ Offline Mode — showing cached data where available
+          </div>
+        )}
+
+        {loading && <p style={{
+          color: "#666"
+        }}>Loading repositories...</p>}
 
         {!loading && repos.length === 0 && <p>No repos found (check console for errors).</p>}
 
