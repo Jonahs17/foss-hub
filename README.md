@@ -1,16 +1,22 @@
-# React + Vite
+# FOSS Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Offline-first, installable PWA** showcasing Kerala & open-source projects. Built with React + Vite, IndexedDB caching (`idb-keyval`), and wrapped with Capacitor to produce an Android APK.
 
-Currently, two official plugins are available:
+## Highlights
+- Offline-first: metadata cached in IndexedDB and served when offline
+- PWA ready (service worker via `vite-plugin-pwa`)
+- Search, license filter, Malayalam UI toggle
+- Simple SPA refresh (no full reload)
+- Small, clean, mobile-friendly UI with icons via `react-icons`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick start (dev)
+```bash
+git clone https://github.com/YOUR_USERNAME/foss-hub.git
+cd foss-hub
+npm install
+# add your GitHub token for higher rate limits
+# create .env.local with: VITE_GITHUB_TOKEN=ghp_xxx
+npm run dev
+```
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Open https://localhost:5173 in your browser
