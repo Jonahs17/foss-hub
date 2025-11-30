@@ -17,6 +17,15 @@
 - Malayalam mode: `docs/screenshots/malayalam.png`  
 - Search & filter controls: `docs/screenshots/search-filter.png`
 
+Example Markdown:
+```md
+![Desktop view](docs/screenshots/desktop-list.png)
+![Mobile view](docs/screenshots/mobile-list.png)
+![Offline mode (cached data)](docs/screenshots/offline.png)
+![Malayalam mode](docs/screenshots/malayalam.png)
+![Search & filter controls](docs/screenshots/search-filter.png)
+```
+
 ## Quick start (dev)
 ```bash
 git clone https://github.com/Jonahs17/foss-hub.git
