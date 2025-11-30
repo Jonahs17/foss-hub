@@ -24,3 +24,13 @@ dist-ssr
 *.sw?
 
 .env.local
+
+# Capacitor / Android build outputs
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/gradle/
+android/.cxx/
+android/.idea/workspace.xml
+
